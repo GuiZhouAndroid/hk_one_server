@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="false"/>  <!-- 全局性地开启或关闭所有映射器配置文件中已配置的任何缓存，默认值为true -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/> <!-- 是否开启驼峰命名自动映射，即从经典数据库列名映射到经典Java属性名，默认值为false -->
+        <!--指定MyBatis应该如何自动映射列到字段或属性,默认值为PARTIAL（属性类型有：NONE, PARTIAL, FULL）
+        NONE：表示关闭自动映射、PARTIAL：只会自动映射没有定义嵌套结果映射的字段、FULL：会自动映射任何复杂的结果集（无论是否嵌套）-->
+        <setting name="autoMappingBehavior" value="FULL"/>
+        <setting name="logImpl"
+                 value="org.apache.ibatis.logging.stdout.StdOutImpl"/>  <!-- 指定MyBatis所用日志的具体实现，未指定时将自动查找(Mybatis-Plus 控制台SQL日志输出) -->
+        <!-- 允许 JDBC 支持自动生成主键，需要数据库驱动支持。如果设置为 true，将强制使用自动生成主键。尽管一些数据库驱动不支持此特性，但仍可正常工作（如 Derby）-->
+        <setting name="useGeneratedKeys" value="false"/>  <!-- Mybatis-Plus 有自动生成，应当禁用自动生成-->
+        <!--配置默认的执行器。SIMPLE 就是普通的执行器；REUSE 执行器会重用预处理语句（PreparedStatement）； BATCH 执行器不仅重用语句还会执行批量更新-->
+        <setting name="defaultExecutorType" value="REUSE"/>  <!-- 配置默认的执行器 -->
+    </settings>
+
+    <!-- 设置javaType+typeHandler的类型别名，提供给XXXMapper.xml中resultMap的<result>标签属性用 -->
+    <typeAliases>
+        <typeAlias alias="IntTypeHandler" type="org.apache.ibatis.type.IntegerTypeHandler"/>
+        <typeAlias alias="BooleanTypeHandler" type="org.apache.ibatis.type.BooleanTypeHandler"/>
+        <typeAlias alias="BigDecimalTypeHandler" type="org.apache.ibatis.type.BigDecimalTypeHandler"/>
+        <typeAlias alias="StringTypeHandler" type="org.apache.ibatis.type.StringTypeHandler"/>
+        <typeAlias alias="LocalDateTimeTypeHandler" type="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <typeAlias alias="LocalDateTime" type="java.time.LocalDateTime"/>
+        <typeAlias alias="String" type="java.lang.String"/>
+        <typeAlias alias="int" type="java.lang.Integer"/>
+        <typeAlias alias="boolean" type="java.lang.Boolean"/>
+        <typeAlias alias="BigDecimal" type="java.math.BigDecimal"/>
+    </typeAliases>
+
+    <!--    <typeHandlers>-->
+    <!--        <typeHandler handler="org.apache.ibatis.type.IntegerTypeHandler"/>-->
+    <!--        <typeHandler handler="org.mybatis.example.ExampleTypeHandler"/>-->
+    <!--    </typeHandlers>-->
+    <!--    <objectFactory type="org.mybatis.example.ExampleObjectFactory">-->
+    <!--        <property name="someProperty" value="100"/>-->
+    <!--    </objectFactory>-->
+</configuration>

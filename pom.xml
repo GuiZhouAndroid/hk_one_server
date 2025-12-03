@@ -5,49 +5,91 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.5.8</version>
+        <relativePath/>
     </parent>
-    <groupId>com.zhangsong</groupId>
-    <artifactId>hk_one_server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>hk_one_server</name>
-    <description>hk_one_server</description>
-    <url/>
-    <licenses>
-        <license/>
+    <groupId>com.zhangsong</groupId>  <!-- 项目的唯一标识符，通常是组织或公司名 -->
+    <artifactId>hk_one_server</artifactId> <!-- 项目的名称 -->
+    <version>0.0.1-SNAPSHOT</version> <!-- 项目的版本号 -->
+    <name>hk_one_server</name> <!-- 项目的简短名称 -->
+    <description>hk_one_server</description> <!-- 项目的描述 -->
+
+    <url/> <!-- 项目的相关 URL，可以留空或填写项目主页 -->
+
+    <licenses> <!-- 项目的许可证信息 -->
+        <license/> <!-- 可以在这里添加许可证信息 -->
     </licenses>
-    <developers>
-        <developer/>
+
+    <developers> <!-- 项目的开发者信息 -->
+        <developer/> <!-- 可以在这里添加开发者信息 -->
     </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+
+    <scm> <!-- 项目的源代码管理信息 -->
+        <connection/> <!-- SCM 连接信息 -->
+        <developerConnection/> <!-- 开发者连接信息 -->
+        <tag/> <!-- 版本标签 -->
+        <url/> <!-- SCM 相关 URL -->
     </scm>
     <properties>
-        <java.version>17</java.version>
+        <java.version>17</java.version>  <!-- 定义 Java 版本为 17 -->
     </properties>
-    <dependencies>
+    <dependencies> <!-- 项目依赖的库列表 -->
+        <!-- Spring Boot Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId> <!-- 引入 Spring Boot Web 相关依赖 -->
         </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
+            <version>9.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+            <version>1.44.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.34</version>
         </dependency>
 
     </dependencies>
 
     <build>
-        <plugins>
+        <plugins> <!-- 构建阶段使用的插件列表 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>spring-boot-maven-plugin</artifactId> <!-- Spring Boot Maven 插件 -->
+                <!-- 该插件用于打包 Spring Boot 应用 -->
             </plugin>
         </plugins>
     </build>
