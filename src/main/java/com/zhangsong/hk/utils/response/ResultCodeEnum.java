@@ -27,12 +27,17 @@ public enum ResultCodeEnum {
     UNKNOWN_REASON(9999, "未知错误"),
 
     // 业务错误
-    ADD_USER_ERROR(1000, "用户注册错误"),
+    ADD_USER_FAILED(1000, "注册失败"),
     UPDATE_USER_ERROR(1001, "用户更新错误"),
-    USER_NOT_FOUND(1002, "用户不存在"),
-    USERNAME_EXISTS(1003, "用户名已存在"),
-    PHONE_EXISTS(1004, "手机号已注册"),
-    LOGIN_FAILED(1005, "登录失败");
+    USER_EXISTS(1002, "用户名已存在"),
+    USER_NOT_FOUND(1003, "用户不存在"),
+
+    USER_PHONE_EXISTS(1004, "手机号已占用"),
+    LOGIN_FAILED(1005, "登录失败"),
+
+    //业务成功
+    ADD_USER_SUCCESS(2000, "用户注册成功"),
+    ADD_UPDATE_SUCCESS(2001, "用户更新成功");
 
     private final Integer code;    // 状态码
     private final String msg;  // 状态信息

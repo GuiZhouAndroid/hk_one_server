@@ -43,7 +43,7 @@ public class UserController {
     @PostMapping("/register")
     public R register(@Valid @RequestBody UserRegisterDTO dto) {
         User user = userService.register(dto);
-        return R.ok("注册成功").data(user);
+        return R.ok(ResultCodeEnum.ADD_USER_SUCCESS.getMsg()).data(user);
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserController {
     @PutMapping("/update")
     public R updateUser(@Valid @RequestBody UserUpdateDTO dto) {
         User user = userService.updateUser(dto);
-        return R.ok("更新成功").data(user);
+        return R.ok(ResultCodeEnum.ADD_UPDATE_SUCCESS.getMsg()).data(user);
     }
 
     /**
@@ -83,7 +83,7 @@ public class UserController {
     public R getUserById(@PathVariable Integer id) {
         User user = userService.getById(id);
         if (user == null) {
-            throw new CustomException(ResultCodeEnum.NOT_FOUND.getCode(), "用户不存在");
+            throw new CustomException(ResultCodeEnum.USER_NOT_FOUND.getCode(), ResultCodeEnum.USER_NOT_FOUND.getMsg());
         }
         return R.ok().data(user);
     }

@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public R<Void> handleCustomException(CustomException e) {
         log.warn("业务异常: {} - {}", e.getCode(), e.getMessage());
-        return R.custom(e.getCode(), e.getMessage());
+        return R.business(e.getCode(), e.getMessage());
     }
 
     /**

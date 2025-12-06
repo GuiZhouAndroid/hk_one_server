@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: * 统一返回格式类，使用泛型 T 来支持不同类型的返回数据
  * @Author: 张松
  * @Date: 2025/12/4 22:13
- * @Version: 1.0
+ * @Version: 2.1 - 增强流畅接口支持，添加带数据的业务方法
  */
 @SuppressWarnings("unchecked")
 @Data
@@ -166,17 +166,33 @@ public class R<T> {
     }
 
     /**
-     * 自定义状态码和消息
+     * 自定义业务状态码和消息（不带数据）
      *
-     * @param code 自定义状态码
-     * @param msg  自定义消息
+     * @param code 自定义业务状态码
+     * @param msg  自定义业务消息
      * @param <T>  泛型类型
      * @return 响应对象
      */
-    public static <T> R<T> custom(Integer code, String msg) {
+    public static <T> R<T> business(Integer code, String msg) {
         return new R<T>()
                 .code(code)
                 .msg(msg);
+    }
+
+    /**
+     * 自定义业务状态码、消息和数据（带数据）
+     *
+     * @param code 自定义业务状态码
+     * @param msg  自定义业务消息
+     * @param data 业务数据
+     * @param <T>  泛型类型
+     * @return 响应对象
+     */
+    public static <T> R<T> business(Integer code, String msg, T data) {
+        return new R<T>()
+                .code(code)
+                .msg(msg)
+                .data(data);
     }
 
     /**
