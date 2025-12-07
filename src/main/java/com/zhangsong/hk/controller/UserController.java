@@ -18,15 +18,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName: UserController
  * @Description: 用户控制器
  * @Author: 张松
- * @Date: 2025/12/3 22:20
+ * @Date: 2025/12/8 20:12
  * @Version: 1.0
  */
 @RestController
@@ -43,6 +41,8 @@ public class UserController {
     @PostMapping("/register")
     public R register(@Valid @RequestBody UserRegisterDTO dto) {
         User user = userService.register(dto);
+        // 清除敏感信息
+        user.setPassword(null);
         return R.ok(ResultCodeEnum.ADD_USER_SUCCESS.getMsg()).data(user);
     }
 
@@ -52,6 +52,8 @@ public class UserController {
     @PutMapping("/update")
     public R updateUser(@Valid @RequestBody UserUpdateDTO dto) {
         User user = userService.updateUser(dto);
+        // 清除敏感信息
+        user.setPassword(null);
         return R.ok(ResultCodeEnum.ADD_UPDATE_SUCCESS.getMsg()).data(user);
     }
 
@@ -85,6 +87,8 @@ public class UserController {
         if (user == null) {
             throw new CustomException(ResultCodeEnum.USER_NOT_FOUND.getCode(), ResultCodeEnum.USER_NOT_FOUND.getMsg());
         }
+        // 清除敏感信息
+        user.setPassword(null);
         return R.ok().data(user);
     }
 
@@ -98,6 +102,8 @@ public class UserController {
                 .orderByDesc("created_time");
 
         List<User> users = userService.list(wrapper);
+        // 清除所有用户的敏感信息
+        users.forEach(user -> user.setPassword(null));
         return R.ok().data(users);
     }
 
@@ -125,6 +131,8 @@ public class UserController {
                 .orderByDesc("created_time");
 
         IPage<User> pageResult = userService.page(page, wrapper);
+        // 清除所有用户的敏感信息
+        pageResult.getRecords().forEach(user -> user.setPassword(null));
         return R.ok().data(pageResult);
     }
 
@@ -154,6 +162,8 @@ public class UserController {
         wrapper.orderByDesc("created_time");
 
         List<User> users = userService.list(wrapper);
+        // 清除所有用户的敏感信息
+        users.forEach(user -> user.setPassword(null));
         return R.ok().data(users);
     }
 
@@ -169,12 +179,12 @@ public class UserController {
             String username) {
 
         boolean exists = userService.isUsernameExists(username);
-        Map<String, Object> result = new HashMap<>();
-        result.put("exists", exists);
-        result.put("available", !exists);
-        result.put("suggestions", exists ? "建议使用其他用户名" : "用户名可用");
+        // 方案1：返回布尔值
+        return R.ok(exists ? "用户名已存在" : "用户名可用").data(exists);
 
-        return R.ok(exists ? "用户名已存在" : "用户名可用").data(result);
+        // 方案2：返回null，只通过消息判断
+        // return R.ok(exists ? "用户名已存在" : "用户名可用");
+
     }
 
     /**
@@ -189,11 +199,11 @@ public class UserController {
             String phone) {
 
         boolean exists = userService.isPhoneExists(phone);
-        Map<String, Object> result = new HashMap<>();
-        result.put("exists", exists);
-        result.put("available", !exists);
+        // 方案1：返回布尔值
+        return R.ok(exists ? "手机号已注册" : "手机号可用").data(exists);
 
-        return R.ok(exists ? "手机号已注册" : "手机号可用").data(result);
+        // 方案2：返回null，只通过消息判断
+        // return R.ok(exists ? "手机号已注册" : "手机号可用");
     }
 
     /**
@@ -220,26 +230,18 @@ public class UserController {
     }
 
     /**
-     * 用户登录
+     * 用户登录 - 使用 Service 层的登录方法
      */
     @PostMapping("/login")
     public R login(
             @RequestParam @NotBlank(message = "用户名不能为空") String username,
             @RequestParam @NotBlank(message = "密码不能为空") String password) {
 
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", username)
-                .eq("password", password)  // 实际项目应该用加密密码比较
-                .eq("status", 1);
+        // 使用 Service 层的登录方法，该方法会处理密码加密验证
+        User user = userService.login(username, password);
 
-        User user = userService.getOne(wrapper);
-        if (user == null) {
-            throw new CustomException(ResultCodeEnum.UNAUTHORIZED.getCode(), "用户名或密码错误");
-        }
-
-        // 更新最后登录时间
-        user.setUpdatedTime(LocalDateTime.now());
-        userService.updateById(user);
+        // 登录成功后，清除敏感信息再返回
+        user.setPassword(null);
 
         return R.ok("登录成功").data(user);
     }
